@@ -40,6 +40,8 @@ CONFIG_CLANG=y
 CONFIG_DEFAULT_AR=y
 endif
 
+CONFIG_ESP=y
+
 # installation directory
 prefix=/usr/local
 
@@ -59,6 +61,9 @@ ifdef CONFIG_WIN32
     CROSS_PREFIX=x86_64-w64-mingw32-
   endif
   EXE=.exe
+else if CONFIG_ESP
+  CROSS_PREFIX=/home/jack/.arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/xtensa-esp32-elf-
+  EXE=
 else
   CROSS_PREFIX=
   EXE=
@@ -105,6 +110,10 @@ DEFINES+=-DCONFIG_BIGNUM
 endif
 ifdef CONFIG_WIN32
 DEFINES+=-D__USE_MINGW_ANSI_STDIO # for standard snprintf behavior
+endif
+
+ifdef CONFIG_ESP
+DEFINES+=-D__ESP__ # for standard snprintf behavior
 endif
 
 CFLAGS+=$(DEFINES)
