@@ -41991,6 +41991,9 @@ static int getTimezoneOffset(int64_t time) {
 #if defined(_WIN32)
     /* XXX: TODO */
     return 0;
+#elif defined(__ESP__)
+    /* XXX: TODO */
+    return 0;
 #else
     time_t ti;
     struct tm tm;
