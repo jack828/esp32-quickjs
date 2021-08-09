@@ -36,7 +36,9 @@
 #include <signal.h>
 #include <limits.h>
 #include <sys/stat.h>
+#if !defined(__ESP__)
 #include <dirent.h>
+#endif
 #if defined(_WIN32)
 #include <windows.h>
 #include <conio.h>
@@ -2424,6 +2426,7 @@ static JSValue js_os_mkdir(JSContext *ctx, JSValueConst this_val,
 }
 
 /* return [array, errorcode] */
+#if !defined(__ESP__)
 static JSValue js_os_readdir(JSContext *ctx, JSValueConst this_val,
                              int argc, JSValueConst *argv)
 {
@@ -2466,6 +2469,7 @@ static JSValue js_os_readdir(JSContext *ctx, JSValueConst this_val,
  done:
     return make_obj_error(ctx, obj, err);
 }
+#endif
 
 #if !defined(_WIN32)
 static int64_t timespec_to_ms(const struct timespec *tv)
@@ -3627,7 +3631,9 @@ static const JSCFunctionListEntry js_os_funcs[] = {
     JS_CFUNC_DEF("getcwd", 0, js_os_getcwd ),
     JS_CFUNC_DEF("chdir", 0, js_os_chdir ),
     JS_CFUNC_DEF("mkdir", 1, js_os_mkdir ),
+#if !defined(__ESP__)
     JS_CFUNC_DEF("readdir", 1, js_os_readdir ),
+#endif
     /* st_mode constants */
     OS_FLAG(S_IFMT),
     OS_FLAG(S_IFIFO),
